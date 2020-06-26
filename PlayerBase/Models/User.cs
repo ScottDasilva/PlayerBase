@@ -15,6 +15,6 @@ namespace PlayerBase.Models
 
         public string UserRole { get; set; }
 
-        public byte[] ProfilePicture { get; set; }
+        public string ProfilePictureUrl { get; set; }
     }
 }
