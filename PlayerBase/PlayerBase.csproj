@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BamButz.MSBuild.TailwindCSS" Version="1.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Highsoft.Highcharts" Version="8.1.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
