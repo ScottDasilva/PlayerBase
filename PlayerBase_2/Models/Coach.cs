@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PlayerBase.Models
+namespace PlayerBase_2.Models
 {
     public class Coach
     {

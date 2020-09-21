@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PlayerBase.Models
+namespace PlayerBase_2.Models
 {
     public class User
     {
