@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace PlayerBase_2.Models
 {
     public class Event
@@ -7,6 +9,7 @@ namespace PlayerBase_2.Models
         {
         }
 
+        [Key]
         public int Id { get; set; }
 
         public int TeamId { get; set; }

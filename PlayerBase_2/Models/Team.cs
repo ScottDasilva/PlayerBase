@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlayerBase_2.Models
 {
@@ -9,6 +10,7 @@ namespace PlayerBase_2.Models
         {
         }
 
+        [Key]
         public int Id { get; set; }
 
         public string City { get; set; }
@@ -21,9 +23,10 @@ namespace PlayerBase_2.Models
 
         public string Abbreviation { get; set; }
 
-        public byte[] Logo { get; set; }
+        public string LogoUrl { get; set; }
 
         public string Email { get; set; }
+
 
         public List<Player> Players { get; set; }
 

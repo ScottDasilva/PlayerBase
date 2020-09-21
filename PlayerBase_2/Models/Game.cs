@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace PlayerBase_2.Models
 {
     public class Game
@@ -7,7 +9,8 @@ namespace PlayerBase_2.Models
         {
         }
 
-        public int id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         public int HomeTeamId { get; set; }
 

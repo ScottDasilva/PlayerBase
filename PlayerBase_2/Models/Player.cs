@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace PlayerBase_2.Models
 {
     public class Player
@@ -7,6 +9,7 @@ namespace PlayerBase_2.Models
         {
         }
 
+        [Key]
         public int Id { get; set; }
 
         public string FirstName { get; set; }
@@ -32,5 +35,7 @@ namespace PlayerBase_2.Models
         public int Assists { get; set; }
 
         public int PenaltyMinutes {get; set;}
+
+        public string ProfilePictureUrl { get; set; }
     }
 }
