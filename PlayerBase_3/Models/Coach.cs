@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlayerBase_3.Models
 {
@@ -11,13 +12,14 @@ namespace PlayerBase_3.Models
 
         [Key]
         public int Id { get; set; }
+        [ForeignKey("Team")]
+        public int TeamId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
-        public int TeamId { get; set; }
         public string Email { get; set; }
         public string VideoUrl { get; set; }
         public int Wins { get; set; }
