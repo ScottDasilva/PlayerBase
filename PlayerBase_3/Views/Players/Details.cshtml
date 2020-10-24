@@ -4,9 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Player Details</h1>
 
-<div>
+@*<div>
     <h4>Player</h4>
     <hr />
     <dl class="row">
@@ -77,7 +77,49 @@
             @Html.DisplayFor(model => model.PenaltyMinutes)
         </dd>
     </dl>
+</div>*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <figure class="figure">
+                <img src="~/Content/Images/defaultImage.jpg" class="figure-img img-fluid rounded" alt="Default User Image" width="180" height="180" />
+                <h5 class="text-center text-primary">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h5>
+            </figure>
+         </div>
+        <div class="col-sm">
+            <div class="border border-dark">
+                <ul style="list-style:none" class="text-center">
+                    <li><span class="font-weight-bold">Position: </span>@Html.DisplayFor(model => model.Position)</li>
+                    <li><span class="font-weight-bold">City: </span>@Html.DisplayFor(model => model.City)</li>
+                    <li><span class="font-weight-bold">Province: </span>@Html.DisplayFor(model => model.Province)</li>
+                    <li><span class="font-weight-bold">Birth Date:  </span>@Html.DisplayFor(model => model.BirthDate)</li>
+                    <li><span class="font-weight-bold">Email:  </span>@Html.DisplayFor(model => model.Email)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-bordered">
+                <tr class="bg-info text-center">
+                    <td class="font-weight-bold">Games Played</td>
+                    <td class="font-weight-bold">Goals</td>
+                    <td class="font-weight-bold">Assists</td>
+                    <td class="font-weight-bold">Penalty Minutes</td>
+                </tr>
+                <tr class="text-center">
+                    <td>@Html.DisplayFor(model => model.GamesPlayed)</td>
+                    <td>@Html.DisplayFor(model => model.Goals)</td>
+                    <td>@Html.DisplayFor(model => model.Assists)</td>
+                    <td>@Html.DisplayFor(model => model.PenaltyMinutes)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

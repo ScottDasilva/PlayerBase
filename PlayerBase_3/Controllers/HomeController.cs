@@ -20,6 +20,10 @@ namespace PlayerBase_3.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
             return View();
         }
 

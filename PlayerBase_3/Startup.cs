@@ -38,7 +38,7 @@ namespace PlayerBase_3
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
 
