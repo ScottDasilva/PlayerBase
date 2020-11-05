@@ -38,6 +38,12 @@ namespace PlayerBase_3
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
+            services.AddMvc().AddXmlSerializerFormatters();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<ICoachRepository, CoachRepository>();
+            services.AddScoped<IGameRepository, GameRepository>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
