@@ -51,5 +51,14 @@ namespace PlayerBase_3.Models
 
             return teamChanges;
         }
+
+        public List<Player> GetPlayers(int id)
+        {
+            var players = context.Players.ToList();
+
+            players = players.Where(pt => pt.TeamId == id).ToList();
+
+            return players;
+        }
     }
 }

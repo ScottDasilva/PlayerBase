@@ -25,19 +25,22 @@ namespace PlayerBase_3.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IPlayerRepository _playerRepository;
 
         public RegisterModel(
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IPlayerRepository playerRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _playerRepository = playerRepository;
         }
 
         [BindProperty]
@@ -102,6 +105,18 @@ namespace PlayerBase_3.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    Player player = new Player
+                    {
+                        UserId = user.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        BirthDate = user.BirthDate,
+                        Province = user.Province,
+                        City = user.City,
+                        Email = user.Email,
+                    };
+
+                    _playerRepository.Add(player);
                     result = await _userManager.AddToRoleAsync(user, "Player");
                     if (!result.Succeeded)
                     {

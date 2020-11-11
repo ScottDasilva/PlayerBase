@@ -15,7 +15,7 @@ namespace PlayerBase_3.Models
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         [ForeignKey("Team")]
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         [Required, Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required, Display(Name = "Last Name")]

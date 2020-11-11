@@ -1,83 +1,137 @@
-﻿@model PlayerBase_3.Models.Player
+﻿@using Highsoft.Web.Mvc.Charts;
+@using Highsoft.Web.Mvc.Charts.Rendering;
+
+@model PlayerBase_3.Models.Player
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Player Details</h1>
+@section scripts {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+}
 
-@*<div>
-    <h4>Player</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Position)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Position)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Province)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Province)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GamesPlayed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GamesPlayed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Goals)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Goals)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Assists)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Assists)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PenaltyMinutes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PenaltyMinutes)
-        </dd>
-    </dl>
-</div>*@
+@{ var chartOptions = new Highcharts
+    {
+        Title = new Title
+        {
+            Text = "Player Analytics"
+        },
+
+        XAxis = new List<XAxis>
+{
+            new XAxis
+            {
+                Categories = new List<string> {
+                   "G/GP",
+                   "A/GP",
+                   "P/GP",
+                   "PIM/GP"
+                }
+            }
+        },
+
+        YAxis = new List<YAxis>
+{
+            new YAxis
+            {
+                Title = new YAxisTitle
+                {
+                    Text = "Values"
+                }
+            }
+        },
+
+        Series = new List<Series>
+{
+            new ColumnSeries
+            {
+                Name = Model.FirstName + " " + Model.LastName,
+                Data = ViewData["playerData"] as List<ColumnSeriesData>
+            }
+        }
+    };
+
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions);
+
+}
+
+
+    <h1>Player Details</h1>
+
+    @*<div>
+            <h4>Player</h4>
+            <hr />
+            <dl class="row">
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.BirthDate)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Position)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Position)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Province)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Province)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.GamesPlayed)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.GamesPlayed)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Goals)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Goals)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Assists)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Assists)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.PenaltyMinutes)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.PenaltyMinutes)
+                </dd>
+            </dl>
+        </div>*@
 
 <div class="container">
     <div class="row">
@@ -86,7 +140,7 @@
                 <img src="~/Content/Images/defaultImage.jpg" class="figure-img img-fluid rounded" alt="Default User Image" width="180" height="180" />
                 <h5 class="text-center text-primary">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h5>
             </figure>
-         </div>
+        </div>
         <div class="col-sm">
             <div class="border border-dark">
                 <ul style="list-style:none" class="text-center">
@@ -118,9 +172,15 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm">
+            @Html.Raw(renderer.RenderHtml())
+        </div>
+    </div>
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>

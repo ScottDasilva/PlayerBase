@@ -2,11 +2,12 @@
 
 @{
     ViewData["Title"] = "Details";
+    var players = ViewBag.Players;
 }
 
-<h1>Details</h1>
+<h1>Team Details</h1>
 
-<div>
+@*<div>
     <h4>Team</h4>
     <hr />
     <dl class="row">
@@ -47,7 +48,56 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
+</div>*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <figure class="figure">
+                <img src="~/Content/Images/defaultImage.jpg" class="figure-img img-fluid rounded" alt="Default User Image" width="180" height="180" />
+                <h5 class="text-center text-primary">@Html.DisplayFor(model => model.Name) (@Model.Abbreviation)</h5>
+            </figure>
+        </div>
+        <div class="col-sm">
+            <div class="border border-dark">
+                <ul style="list-style:none" class="text-center">
+                    <li><span class="font-weight-bold">League: </span>@Html.DisplayFor(model => model.League)</li>
+                    <li><span class="font-weight-bold">City: </span>@Html.DisplayFor(model => model.City)</li>
+                    <li><span class="font-weight-bold">Province: </span>@Html.DisplayFor(model => model.Province)</li>
+                    <li><span class="font-weight-bold">Email:  </span>@Html.DisplayFor(model => model.Email)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-bordered">
+                <tr class="bg-info text-center">
+                    <td class="font-weight-bold">Name</td>
+                    <td class="font-weight-bold">Games Played</td>
+                    <td class="font-weight-bold">Goals</td>
+                    <td class="font-weight-bold">Assists</td>
+                    <td class="font-weight-bold">Penalty Minutes</td>
+                </tr>
+                @{
+                    foreach (var p in players)
+                    {
+                        <tr class="text-center">
+                            <td><a asp-controller="Players" asp-action="Details" asp-route-id="@p.Id">@p.FirstName @p.LastName</a></td>
+                            <td>@p.GamesPlayed</td>
+                            <td>@p.Goals</td>
+                            <td>@p.Assists</td>
+                            <td>@p.PenaltyMinutes</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

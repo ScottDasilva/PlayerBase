@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PlayerBase_3.Models
 {
-    interface IPlayerRepository
+    public interface IPlayerRepository
     {
         Player GetPlayer(int Id);
         IEnumerable<Player> GetAllPlayers();

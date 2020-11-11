@@ -19,18 +19,21 @@ namespace PlayerBase_3.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITeamRepository _teamRepository;
 
         public TeamsController(
             ApplicationDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager
+            SignInManager<ApplicationUser> signInManager,
+            ITeamRepository teamRepository
             )
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
+            _teamRepository = teamRepository;
         }
 
         // GET: Teams
@@ -53,6 +56,8 @@ namespace PlayerBase_3.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Players = GetPlayersOnTeam(team.Id);
 
             return View(team);
         }
@@ -171,6 +176,11 @@ namespace PlayerBase_3.Controllers
         private bool TeamExists(int id)
         {
             return _context.Teams.Any(e => e.Id == id);
+        }
+
+        private List<Player> GetPlayersOnTeam(int id)
+        {
+            return _teamRepository.GetPlayers(id);
         }
     }
 }

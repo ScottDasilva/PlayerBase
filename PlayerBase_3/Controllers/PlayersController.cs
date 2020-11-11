@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Highsoft.Web.Mvc.Charts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,17 @@ namespace PlayerBase_3.Controllers
             {
                 return NotFound();
             }
+
+            double ggp = Convert.ToDouble(player.Goals) / Convert.ToDouble(player.GamesPlayed);
+            double agp = Convert.ToDouble(player.Assists) / Convert.ToDouble(player.GamesPlayed);
+            double pimgp = Convert.ToDouble(player.PenaltyMinutes) / Convert.ToDouble(player.GamesPlayed);
+            double pgp = (Convert.ToDouble(player.Goals) + Convert.ToDouble(player.Assists)) / Convert.ToDouble(player.GamesPlayed);
+
+            List<double> playerValues = new List<double> { ggp, agp, pimgp, pgp };
+            List<ColumnSeriesData> playerData = new List<ColumnSeriesData>();
+
+            playerValues.ForEach(p => playerData.Add(new ColumnSeriesData { Y = p }));
+            ViewData["playerData"] = playerData;
 
             return View(player);
         }
