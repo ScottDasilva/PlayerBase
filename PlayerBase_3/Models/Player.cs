@@ -31,6 +31,11 @@ namespace PlayerBase_3.Models
         public int Assists { get; set; }
         [Display(Name = "Penalty Minutes")]
         public int PenaltyMinutes {get; set;}
+
+        public bool HasTeam()
+        {
+            return TeamId != null;
+        }
         
     }
 }

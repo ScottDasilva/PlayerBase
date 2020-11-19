@@ -39,6 +39,11 @@ namespace PlayerBase_3.Models
             return context.Events;
         }
 
+        public IEnumerable<Event> GetTeamEvents(int teamId)
+        {
+            return context.Events.Where(e => e.TeamId == teamId);
+        }
+
         public Event GetEvent(int Id)
         {
             return context.Events.Find(Id);

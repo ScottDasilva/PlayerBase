@@ -4,7 +4,7 @@
 @model PlayerBase_3.Models.Player
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Player Details";
 }
 
 @section scripts {
@@ -144,6 +144,7 @@
         <div class="col-sm">
             <div class="border border-dark">
                 <ul style="list-style:none" class="text-center">
+                    <li><span class="font-weight-bold">Team: </span>@ViewBag.playerTeam.Name</li>
                     <li><span class="font-weight-bold">Position: </span>@Html.DisplayFor(model => model.Position)</li>
                     <li><span class="font-weight-bold">City: </span>@Html.DisplayFor(model => model.City)</li>
                     <li><span class="font-weight-bold">Province: </span>@Html.DisplayFor(model => model.Province)</li>
@@ -157,7 +158,7 @@
     <div class="row">
         <div class="col-sm">
             <table class="table table-bordered">
-                <tr class="bg-info text-center">
+                <tr class="bg-dark text-light text-center">
                     <td class="font-weight-bold">Games Played</td>
                     <td class="font-weight-bold">Goals</td>
                     <td class="font-weight-bold">Assists</td>

@@ -20,13 +20,17 @@ namespace PlayerBase_3.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ITeamRepository _teamRepository;
+        private readonly IPlayerRepository _playerRepository;
+        ApplicationUser user;
+        Player player;
 
         public TeamsController(
             ApplicationDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ITeamRepository teamRepository
+            ITeamRepository teamRepository,
+            IPlayerRepository playerRepository
             )
         {
             _context = context;
@@ -34,17 +38,49 @@ namespace PlayerBase_3.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _teamRepository = teamRepository;
+            _playerRepository = playerRepository;
         }
 
         // GET: Teams
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchBy, string search)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
+
+            if (search != null)
+            {
+                if (searchBy == "Name")
+                {
+                    return View(await _context.Teams.Where(t => t.Name.Contains(search)).ToListAsync());
+                }
+
+                if (searchBy == "City")
+                {
+                    return View(await _context.Teams.Where(t => t.City.Contains(search)).ToListAsync());
+                }
+
+                if (searchBy == "Province")
+                {
+                    return View(await _context.Teams.Where(t => t.Province.Contains(search)).ToListAsync());
+                }
+
+                if (searchBy == "League")
+                {
+                    return View(await _context.Teams.Where(t => t.League.Contains(search)).ToListAsync());
+                }
+            }
+            
             return View(await _context.Teams.ToListAsync());
         }
 
         // GET: Teams/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
+
             if (id == null)
             {
                 return NotFound();
@@ -65,6 +101,9 @@ namespace PlayerBase_3.Controllers
         // GET: Teams/Create
         public IActionResult Create()
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
             return View();
         }
 
@@ -75,15 +114,18 @@ namespace PlayerBase_3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,City,Province,Name,League,Abbreviation,Email")] Team team)
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
 
             if (ModelState.IsValid)
             {
-                _context.Add(team);
                 var result = await _userManager.AddToRoleAsync(user, "Manager");
                 if (result.Succeeded)
                 {
-                    await _context.SaveChangesAsync();
+                    _teamRepository.Add(team);
+                    player.TeamId = team.Id;
+                    _playerRepository.Update(player);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -93,6 +135,10 @@ namespace PlayerBase_3.Controllers
         // GET: Teams/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
+
             if (id == null)
             {
                 return NotFound();
@@ -114,6 +160,9 @@ namespace PlayerBase_3.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,City,Province,Name,League,Abbreviation,Email")] Team team)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
             if (id != team.Id)
             {
                 return NotFound();
@@ -146,6 +195,9 @@ namespace PlayerBase_3.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
             if (id == null)
             {
                 return NotFound();
@@ -167,6 +219,9 @@ namespace PlayerBase_3.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
             var team = await _context.Teams.FindAsync(id);
             _context.Teams.Remove(team);
             await _context.SaveChangesAsync();

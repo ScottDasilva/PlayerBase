@@ -43,6 +43,11 @@ namespace PlayerBase_3.Models
             return context.Players.Find(Id);
         }
 
+        public Player GetPlayerByUserId(string userId)
+        {
+            return context.Players.FirstOrDefault(p => p.UserId == userId);
+        }
+
         public Player Update(Player playerChanges)
         {
             var player = context.Players.Attach(playerChanges);

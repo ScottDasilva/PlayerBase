@@ -1,22 +1,28 @@
 ﻿@model IEnumerable<PlayerBase_3.Models.Player>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Players";
 }
 
-<h1>Index</h1>
+<h1>Players</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create">Create New</a>*@
+    @using (Html.BeginForm("Index", "Players", FormMethod.Get))
+    {
+        <b>Search:</b> @Html.RadioButton("SearchBy", "Name", true) <text> Name </text>
+        @Html.RadioButton("SearchBy", "City")<text> City </text>
+        @Html.RadioButton("SearchBy", "Province") <text> Province </text>
+        @Html.RadioButton("SearchBy", "Position") <text> Position </text><br />
+        @Html.TextBox("search") <input type="submit" value="Search" />
+    }
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-hover text-center">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Name
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BirthDate)
@@ -49,13 +55,16 @@
         </tr>
     </thead>
     <tbody>
+@if (Model.Count() == 0)
+{
+    <tr class="text-center">
+        <td colspan="11">No players match search criteria.</td>
+    </tr>
+}
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BirthDate)

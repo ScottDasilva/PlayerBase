@@ -6,6 +6,13 @@
     <title>@ViewData["Title"] - Player Base</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        .dropdown-menu a:hover {
+            background-color: #696969;
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -28,18 +35,59 @@
                         @{
                             if (User.Identity.IsAuthenticated)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Players" asp-action="Index">Players</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Coaches" asp-action="Index">Coaches</a>
-                                </li>
+                                Player player = ViewBag.Player;
+
+                                if (player != null)
+                                {
+                                    <li class="nav-item">
+                                        <div class="dropdown">
+                                            <a class="nav-link text-light dropdown-toggle" id="teamsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Teams
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="teamsDropdown">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">View All Teams</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Details" asp-route-id="@player.TeamId">My Team</a>
+                                                @{
+                                                    if (!player.HasTeam())
+                                                    {
+                                                        <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Create">Create Team</a>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="dropdown">
+                                            <a class="nav-link text-light dropdown-toggle" id="playersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Players
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="playersDropdown">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">View All Players</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Details" asp-route-id="@player.Id">View My Profile</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Edit" asp-route-id="@player.Id">Update Player My Profile</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    if (player.HasTeam())
+                                    {
+                                        <li class="nav-item">
+                                            <div class="dropdown">
+                                                <a class="nav-link text-light dropdown-toggle" id="eventsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Events
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="eventsDropdown">
+                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">My Events</a>
+                                                    @{
+                                                        if (User.IsInRole("Manager"))
+                                                        {
+                                                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Create">Create Event</a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                }
                             }
                         }
                     </ul>
