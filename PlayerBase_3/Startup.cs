@@ -44,6 +44,7 @@ namespace PlayerBase_3
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ICoachRepository, CoachRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IJoinTeamRequestRepository, JoinTeamRequestRepository>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }

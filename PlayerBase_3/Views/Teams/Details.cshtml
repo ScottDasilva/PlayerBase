@@ -53,9 +53,10 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            <figure class="figure">
+            <figure class="figure text-center">
                 <img src="~/Content/Images/defaultImage.jpg" class="figure-img img-fluid rounded" alt="Default User Image" width="180" height="180" />
                 <h5 class="text-center text-primary">@Html.DisplayFor(model => model.Name) (@Model.Abbreviation)</h5>
+                <a class="btn btn-primary" href="@Url.Action("ApplyToTeam", "JoinTeamRequests", new { teamId = Model.Id })" role="button">Apply to Team</a>
             </figure>
         </div>
         <div class="col-sm">

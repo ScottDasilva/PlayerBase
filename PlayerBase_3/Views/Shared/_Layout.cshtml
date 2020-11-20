@@ -45,11 +45,17 @@
                                                 Teams
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">View All Teams</a>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Details" asp-route-id="@player.TeamId">My Team</a>
+                                                @{
+                                                    if (player.HasTeam())
+                                                    {
+                                                        <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Details" asp-route-id="@player.TeamId">My Team</a>
+                                                    }
+                                                }
+
                                                 @{
                                                     if (!player.HasTeam())
                                                     {
+                                                        <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">View All Teams</a>
                                                         <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Create">Create Team</a>
                                                     }
                                                 }
@@ -85,6 +91,12 @@
                                                     }
                                                 </div>
                                             </div>
+                                        </li>
+                                    }
+                                    if (User.IsInRole("Manager"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" asp-area="" asp-controller="JoinTeamRequests" asp-action="Index">Pending Requests</a>
                                         </li>
                                     }
                                 }

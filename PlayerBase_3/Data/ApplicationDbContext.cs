@@ -19,5 +19,6 @@ namespace PlayerBase_3.Data
         public DbSet<Game> Games { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<PlayerBase_3.Models.JoinTeamRequest> JoinTeamRequest { get; set; }
     }
 }
