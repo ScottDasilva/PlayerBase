@@ -20,6 +20,7 @@ namespace PlayerBase_3.Models
         public string FirstName { get; set; }
         [Required, Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
         public string Position { get; set; }
         public string Province { get; set; }
