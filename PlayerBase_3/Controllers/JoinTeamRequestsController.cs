@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using PlayerBase_3.Models;
 
 namespace PlayerBase_3.Controllers
 {
+    [Authorize]
     public class JoinTeamRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -49,6 +51,7 @@ namespace PlayerBase_3.Controllers
             return RedirectToAction("Index", "Teams");
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult ApprovePlayer(int playerId)
         {
             var joinTeamRequest = _joinTeamRequestRepository.GetJoinTeamRequestByPlayerId(playerId);
@@ -63,6 +66,7 @@ namespace PlayerBase_3.Controllers
         }
 
         // GET: JoinTeamRequests
+        [Authorize(Roles = "Manager")]
         public IActionResult Index()
         {
             user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
@@ -173,6 +177,7 @@ namespace PlayerBase_3.Controllers
         }
 
         // GET: JoinTeamRequests/Delete/5
+        [Authorize(Roles = "Manager")]
         public IActionResult Delete(int? id)
         {
             user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
@@ -198,6 +203,7 @@ namespace PlayerBase_3.Controllers
         // POST: JoinTeamRequests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var joinTeamRequest = _joinTeamRequestRepository.GetJoinTeamRequestByPlayerId(id);

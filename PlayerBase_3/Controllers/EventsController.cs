@@ -136,6 +136,7 @@ namespace PlayerBase_3.Controllers
             {
                 try
                 {
+                    @event.TeamId = Convert.ToInt32(player.TeamId);
                     _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }

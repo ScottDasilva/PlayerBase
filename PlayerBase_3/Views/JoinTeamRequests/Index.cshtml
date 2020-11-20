@@ -1,94 +1,101 @@
 ﻿@model IEnumerable<PlayerBase_3.Models.Player>
-    
-        @{
-            ViewData["Title"] = "Pending Requests";
-        }
 
-        <h1>Pending Player Requests</h1>
+@{
+    ViewData["Title"] = "Pending Requests";
+}
 
-        <table class="table">
-            <thead>
+@if (Model.Count() > 0)
+{
+    <h1>Pending Player Requests</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Province)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GamesPlayed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Goals)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Assists)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PenaltyMinutes)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LastName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.BirthDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Position)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Province)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.City)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.GamesPlayed)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Goals)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Assists)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.PenaltyMinutes)
-                    </th>
-                    <th></th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Province)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GamesPlayed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Goals)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Assists)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PenaltyMinutes)
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="@Url.Action("ApprovePlayer", "JoinTeamRequests", new { playerId = item.Id })" role="button">Approve</a>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BirthDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Position)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Province)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.GamesPlayed)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Goals)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Assists)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PenaltyMinutes)
-                        </td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="@Url.Action("ApprovePlayer", "JoinTeamRequests", new { playerId = item.Id })" role="button">Approve</a>
-                            @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
+} else
+{
+    <h1>You have no pending requests.</h1>
+}
+

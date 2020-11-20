@@ -133,6 +133,7 @@ namespace PlayerBase_3.Controllers
         }
 
         // GET: Teams/Edit/5
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             user = _userManager.FindByEmailAsync(User.Identity.Name).Result;

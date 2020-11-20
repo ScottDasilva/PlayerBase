@@ -87,9 +87,10 @@ namespace PlayerBase_3.Controllers
             double ggp = Convert.ToDouble(player.Goals) / Convert.ToDouble(player.GamesPlayed);
             double agp = Convert.ToDouble(player.Assists) / Convert.ToDouble(player.GamesPlayed);
             double pimgp = Convert.ToDouble(player.PenaltyMinutes) / Convert.ToDouble(player.GamesPlayed);
-            double pgp = (Convert.ToDouble(player.Goals) + Convert.ToDouble(player.Assists)) / Convert.ToDouble(player.GamesPlayed);
+            double points = Convert.ToDouble(player.Goals) + Convert.ToDouble(player.Assists);
+            double pgp = points / Convert.ToDouble(player.GamesPlayed);
 
-            List<double> playerValues = new List<double> { Math.Round(ggp, 2), Math.Round(agp, 2), Math.Round(pimgp, 2), Math.Round(pgp, 2) };
+            List<double> playerValues = new List<double> { Math.Round(ggp, 2), Math.Round(agp, 2), Math.Round(pgp, 2), Math.Round(pimgp, 2) };
             List<ColumnSeriesData> playerData = new List<ColumnSeriesData>();
 
             playerValues.ForEach(p => playerData.Add(new ColumnSeriesData { Y = p }));
@@ -100,7 +101,7 @@ namespace PlayerBase_3.Controllers
                 ViewBag.playerTeam = _teamRepository.GetTeam(Convert.ToInt32(player.TeamId));
             } else
             {
-                ViewBag.playerTeam = "N/A";
+                ViewBag.playerTeam = null;
             }
 
             return View(player);

@@ -30,6 +30,9 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @{
@@ -44,21 +47,25 @@
                                             <a class="nav-link text-light dropdown-toggle" id="teamsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Teams
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="teamsDropdown">
+                                            <div class="dropdown-menu text-center" aria-labelledby="teamsDropdown">
                                                 @{
                                                     if (player.HasTeam())
                                                     {
                                                         <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Details" asp-route-id="@player.TeamId">My Team</a>
+                                                        @if (User.IsInRole("Manager"))
+                                                        {
+                                                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Edit" asp-route-id="@player.TeamId">Edit Team Profile</a>
+                                                        }
                                                     }
                                                 }
 
                                                 @{
                                                     if (!player.HasTeam())
                                                     {
-                                                        <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">View All Teams</a>
                                                         <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Create">Create Team</a>
                                                     }
                                                 }
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">View All Teams</a>
                                             </div>
                                         </div>
                                     </li>
@@ -67,10 +74,10 @@
                                             <a class="nav-link text-light dropdown-toggle" id="playersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Players
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="playersDropdown">
+                                            <div class="dropdown-menu text-center" aria-labelledby="playersDropdown">
                                                 <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">View All Players</a>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Details" asp-route-id="@player.Id">View My Profile</a>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Edit" asp-route-id="@player.Id">Update Player My Profile</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Details" asp-route-id="@player.Id">View My Player Profile</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Edit" asp-route-id="@player.Id">Update My Player Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -81,7 +88,7 @@
                                                 <a class="nav-link text-light dropdown-toggle" id="eventsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Events
                                                 </a>
-                                                <div class="dropdown-menu" aria-labelledby="eventsDropdown">
+                                                <div class="dropdown-menu text-center" aria-labelledby="eventsDropdown">
                                                     <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">My Events</a>
                                                     @{
                                                         if (User.IsInRole("Manager"))

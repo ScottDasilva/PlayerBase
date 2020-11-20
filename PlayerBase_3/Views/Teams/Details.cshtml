@@ -3,52 +3,10 @@
 @{
     ViewData["Title"] = "Details";
     var players = ViewBag.Players;
+    Player userPlayer = ViewBag.Player;
 }
 
 <h1>Team Details</h1>
-
-@*<div>
-    <h4>Team</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Province)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Province)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.League)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.League)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Abbreviation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Abbreviation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
-</div>*@
 
 <div class="container">
     <div class="row">
@@ -56,7 +14,10 @@
             <figure class="figure text-center">
                 <img src="~/Content/Images/defaultImage.jpg" class="figure-img img-fluid rounded" alt="Default User Image" width="180" height="180" />
                 <h5 class="text-center text-primary">@Html.DisplayFor(model => model.Name) (@Model.Abbreviation)</h5>
-                <a class="btn btn-primary" href="@Url.Action("ApplyToTeam", "JoinTeamRequests", new { teamId = Model.Id })" role="button">Apply to Team</a>
+                @if (!userPlayer.HasTeam())
+                {
+                    <a class="btn btn-primary" href="@Url.Action("ApplyToTeam", "JoinTeamRequests", new { teamId = Model.Id })" role="button">Apply to Team</a>
+                }
             </figure>
         </div>
         <div class="col-sm">
@@ -81,16 +42,19 @@
                     <td class="font-weight-bold">Games Played</td>
                     <td class="font-weight-bold">Goals</td>
                     <td class="font-weight-bold">Assists</td>
+                    <td class="font-weight-bold">Points</td>
                     <td class="font-weight-bold">Penalty Minutes</td>
                 </tr>
                 @{
                     foreach (var p in players)
                     {
+                        int points = p.Goals + p.Assists;
                         <tr class="text-center">
                             <td><a asp-controller="Players" asp-action="Details" asp-route-id="@p.Id">@p.FirstName @p.LastName</a></td>
                             <td>@p.GamesPlayed</td>
                             <td>@p.Goals</td>
                             <td>@p.Assists</td>
+                            <td>@points</td>
                             <td>@p.PenaltyMinutes</td>
                         </tr>
                     }
@@ -101,6 +65,5 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">View All Teams</a>
 </div>

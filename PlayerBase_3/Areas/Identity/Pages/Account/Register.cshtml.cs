@@ -78,6 +78,7 @@ namespace PlayerBase_3.Areas.Identity.Pages.Account
             public string City { get; set; }
             public string Province { get; set; }
             [Display(Name = "Birth Date")]
+            [DataType(DataType.Date)]
             public DateTime? BirthDate { get; set; }
         }
 

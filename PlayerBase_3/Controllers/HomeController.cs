@@ -45,6 +45,16 @@ namespace PlayerBase_3.Controllers
             user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
             player = _playerRepository.GetPlayerByUserId(user.Id);
             ViewBag.Player = player;
+
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            user = _userManager.FindByEmailAsync(User.Identity.Name).Result;
+            player = _playerRepository.GetPlayerByUserId(user.Id);
+            ViewBag.Player = player;
+
             return View();
         }
 
