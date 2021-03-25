@@ -25,7 +25,7 @@ namespace PlayerBase_3
             DbInitializer.appSecrets = secrets;
 
             using (var scope = host.Services.CreateScope())
-                DbInitializer.SeedUsersAndRoles(scope.ServiceProvider).Wait();
+                //DbInitializer.SeedUsersAndRoles(scope.ServiceProvider).Wait();
             host.Run();
         }
 
